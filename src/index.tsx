@@ -11,12 +11,18 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CssBaseline from '@mui/material/CssBaseline';
+import {MainPage} from "./pages/mainPage";
+import {GamePage} from "./pages/gamePage";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
+        element: <MainPage />,
         errorElement: <div>Sorry, page not found</div>,
+    },
+    {
+        path: "/game/:id",
+        element: <GamePage />,
     },
 ]);
 
