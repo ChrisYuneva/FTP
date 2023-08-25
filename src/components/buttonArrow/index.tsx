@@ -9,10 +9,10 @@ const ButtonArrowStyle = styled(Button)(() => ({
     borderRadius: '50%',
     border: '1px solid #8DFD1B',
     position: 'fixed',
-    left: '95%',
-    bottom: '4%',
+    right: '2%',
+    bottom: '2%',
     '&:hover': {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#1A1A1A',
     },
 }));
 

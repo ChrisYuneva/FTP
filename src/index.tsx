@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app/App';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { store } from './store/store';
 import {Provider} from 'react-redux';
@@ -13,6 +12,7 @@ import '@fontsource/roboto/700.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import {MainPage} from "./pages/mainPage";
 import {GamePage} from "./pages/gamePage";
+import App from "./app/App";
 
 const router = createBrowserRouter([
     {
@@ -32,8 +32,10 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <CssBaseline />
-            <RouterProvider router={router}/>
+            <App>
+                <CssBaseline />
+                <RouterProvider router={router}/>
+            </App>
         </Provider>
     </React.StrictMode>
 );

@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
-import {Button} from "@mui/material";
 
-function App() {
+type AppProps = {
+    children: React.ReactNode
+}
+
+function App({ children }: AppProps) {
     return (
-        <div className="App">
-            test
-            <Button variant="contained">Hello world</Button>
+        <div className="app">
+            { children }
         </div>
     );
 }

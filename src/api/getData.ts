@@ -1,5 +1,5 @@
-import {API_PATH} from "./consts";
-import {GameType} from "./types/gameType";
+import {API_PATH, API_PATH_ID} from "./consts";
+import {GameType, GameTypeById} from "./types/gameType";
 
 function api<T>(url: string, headers?: HeadersInit): Promise<T> {
     return fetch(
@@ -25,10 +25,10 @@ export function getGames() {
         { method: 'GET' }
     );
 }
-//
-// export function getGameByID(id: string) {
-//     return api<GameType[]>(
-//         `${API_PATH}/${id}`,
-//         { method: 'GET' }
-//     );
-// }
+
+export function getGameByID(id: string) {
+    return api<GameTypeById>(
+        `${API_PATH_ID}${id}`,
+        { method: 'GET' }
+    );
+}
