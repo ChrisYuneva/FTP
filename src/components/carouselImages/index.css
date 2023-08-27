@@ -1,0 +1,15 @@
+.primary {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+.item {
+    opacity: 0.3;
+    max-height: 300px;
+}
+
+.primaryItem {
+    opacity: 1;
+    max-height: 300px;
+}

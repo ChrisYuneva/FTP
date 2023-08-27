@@ -13,7 +13,7 @@ import {categories, platforms} from "./consts";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AbcIcon from '@mui/icons-material/Abc';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import {ChipMultiSelect} from "../../components/chipMultiSelect/chipMultiSelect";
+import {ChipMultiSelect} from "../../components/chipMultiSelect";
 import Box from "@mui/material/Box";
 
 export function MainPage() {
@@ -31,7 +31,7 @@ export function MainPage() {
         setFilter({
             ...filter,
             [filterName]: value
-        })
+        });
     }
 
     function getGamesList(params?: GameSortParams) {
@@ -67,7 +67,7 @@ export function MainPage() {
     }, [filter]);
 
     return (
-        <Grid container sx={{ padding: '16px 0px'}} flexDirection="column" gap="16px">
+        <Grid container flexDirection="column" gap="16px">
             {isLoading
                 ? <Loading isLoading={ isLoading } />
                 : <>

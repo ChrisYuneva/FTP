@@ -7,6 +7,7 @@ import {formatDate} from "../../utils/formatDate";
 import {getGameByID} from "../../api/getData";
 import {Loading} from "../../components/loading";
 import {ButtonReturn} from "../../components/buttonReturn";
+import {CarouselImages} from "../../components/carouselImages";
 
 export function GamePage() {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ export function GamePage() {
     }, [id]);
 
     return (
-        <Grid container marginTop="24px">
+        <Grid container>
             {
                 isLoading
                     ? <Loading isLoading={isLoading}/>
@@ -51,10 +52,6 @@ export function GamePage() {
                             <Typography variant="subtitle1">Publisher: {gameById.publisher}</Typography>
                             <Typography variant="subtitle1">Developer: {gameById.developer}</Typography>
 
-                            {/*{*/}
-                            {/*    gameById.minimum_system_requirements.*/}
-                            {/*}*/}
-
                             <Typography component="div">
                                 Minimum system requirements:
                                 <ul>
@@ -75,12 +72,7 @@ export function GamePage() {
                                     </li>
                                 </ul>
                             </Typography>
-                            {/*<Typography variant="subtitle1">{gameById.minimum_system_requirements?.os}</Typography>*/}
-                            {/*<Typography variant="subtitle1">{gameById.minimum_system_requirements?.graphics}</Typography>*/}
-                            {/*<Typography variant="subtitle1">{gameById.minimum_system_requirements?.storage}</Typography>*/}
-                            {/*<Typography variant="subtitle1">{gameById.minimum_system_requirements?.memory}</Typography>*/}
-                            {/*<Typography variant="subtitle1">{gameById.minimum_system_requirements?.processor}</Typography>*/}
-
+                            <CarouselImages key={gameById.id} img={gameById.screenshots} />
                         </Card>
                         {
                             errorMessage && <Alert severity="error">{errorMessage}</Alert>
