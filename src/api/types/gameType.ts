@@ -42,3 +42,15 @@ export type GameTypeById = {
     minimum_system_requirements: MinSystemRequirements,
     screenshots: Screenshots[]
 }
+
+export type GameSortParams = {
+    platform?: string,
+    category?: string,
+    "sort-by"?: string
+}
+
+export type GameSortByTagParams = {
+    platform?: string,
+    tag?: string,
+    "sort-by"?: string
+}

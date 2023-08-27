@@ -13,6 +13,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {MainPage} from "./pages/mainPage";
 import {GamePage} from "./pages/gamePage";
 import App from "./app/App";
+import {ThemeProvider} from "@mui/material";
+import {THEME} from "./utils/muiTheme";
 
 const router = createBrowserRouter([
     {
@@ -31,11 +33,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App>
-                <CssBaseline />
-                <RouterProvider router={router}/>
-            </App>
-        </Provider>
+        <ThemeProvider theme={ THEME }>
+            <Provider store={store}>
+                <App>
+                    <CssBaseline />
+                    <RouterProvider router={router}/>
+                </App>
+            </Provider>
+        </ThemeProvider>
     </React.StrictMode>
 );

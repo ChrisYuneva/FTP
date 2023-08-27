@@ -13,6 +13,7 @@ const ButtonArrowStyle = styled(Button)(() => ({
     bottom: '2%',
     '&:hover': {
         backgroundColor: '#1A1A1A',
+        boxShadow: "3px 4px 10px 0px #8DFD1B"
     },
 }));
 

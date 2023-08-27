@@ -1,5 +1,5 @@
-import {API_PATH, API_PATH_ID} from "./consts";
-import {GameType, GameTypeById} from "./types/gameType";
+import {API_PATH, API_PATH_FILTER, API_PATH_ID} from "./consts";
+import {GameSortByTagParams, GameSortParams, GameType, GameTypeById} from "./types/gameType";
 
 function api<T>(url: string, headers?: HeadersInit): Promise<T> {
     return fetch(
@@ -19,9 +19,21 @@ function api<T>(url: string, headers?: HeadersInit): Promise<T> {
             return response.json() as Promise<T>
         })
 }
-export function getGames() {
+
+export function toQueryString<T>(obj?: T): string {
+    const queryString = [];
+    for(let key in obj) {
+        if(obj[key]) {
+            queryString.push(`${key}=${obj[key]}`);
+        }
+    }
+
+    return queryString.join('&');
+}
+
+export function getGames(params?: GameSortParams) {
     return api<GameType[]>(
-        API_PATH,
+        `${API_PATH}?${toQueryString<GameSortParams>(params)}`,
         { method: 'GET' }
     );
 }
@@ -31,4 +43,17 @@ export function getGameByID(id: string) {
         `${API_PATH_ID}${id}`,
         { method: 'GET' }
     );
+}
+
+export function getGamesByTag(params?: GameSortParams) {
+    const paramsByTag: GameSortByTagParams = {
+        platform: params?.platform,
+        tag: params?.category,
+        "sort-by": params?.["sort-by"]
+    };
+
+    return api<GameType[]>(
+        `${API_PATH_FILTER}?${toQueryString<GameSortByTagParams>(paramsByTag)}`,
+        { method: 'GET' }
+    )
 }
