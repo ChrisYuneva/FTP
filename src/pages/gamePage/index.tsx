@@ -18,7 +18,11 @@ export function GamePage() {
     const {isLoading, games, gameById, errorMessage} = useAppSelector(state => state.games);
 
     useEffect(() => {
-        if(gameById.filter(el => el.id === Number(id)).length === 0) {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
+        if (gameById.filter(el => el.id === Number(id)).length === 0) {
             dispatch(loading());
             getGameByID(id ?? '')
                 .then(response => dispatch(getById(response)))
@@ -31,7 +35,8 @@ export function GamePage() {
             {
                 isLoading
                     ? <Loading isLoading={isLoading}/>
-                    : <Grid item width="100%">
+                    : !errorMessage &&
+                    <Grid item width="100%">
                         <ButtonCustom text={"Return to list"} arrow={true} onClick={() => navigate(-1)}/>
                         <Card
                             sx={{
@@ -45,54 +50,66 @@ export function GamePage() {
                         >
                             {
                                 gameById.map(el => {
-                                    if(el.id === Number(id)) {
-                                        return <>
-                                            <Typography variant="h4" textAlign='center'>{el.title}</Typography>
-                                            <CardMedia
-                                                sx={{height: 350, width: '100%', backgroundSize: 'contain'}}
-                                                image={el.thumbnail}
-                                                title={el.title}
-                                            />
-                                            <Typography variant="h5">Release date: {formatDate(el.release_date)}</Typography>
-                                            <Typography variant="h5">Genre: {el.genre}</Typography>
-                                            <Typography variant="h5">Publisher: {el.publisher}</Typography>
-                                            <Typography variant="h5">Developer: {el.developer}</Typography>
+                                        if (el.id === Number(id)) {
+                                            return <>
+                                                <Typography variant="h4" textAlign='center'>{el.title}</Typography>
+                                                <CardMedia
+                                                    sx={{height: 350, width: '100%', backgroundSize: 'contain'}}
+                                                    image={el.thumbnail}
+                                                    title={el.title}
+                                                />
+                                                {
+                                                    formatDate(el.release_date) !== "Invalid Date" &&
+                                                    <Typography variant="h5">
+                                                        Release date: {formatDate(el.release_date)}
+                                                    </Typography>
+                                                }
+                                                <Typography variant="h5">Genre: {el.genre}</Typography>
+                                                <Typography variant="h5">Publisher: {el.publisher}</Typography>
+                                                <Typography variant="h5">Developer: {el.developer}</Typography>
 
-                                            <Typography component="div">
-                                                Minimum system requirements:
-                                                <ul>
-                                                    <li>
-                                                        {el.minimum_system_requirements?.os}
-                                                    </li>
-                                                    <li>
-                                                        {el.minimum_system_requirements?.memory}
-                                                    </li>
-                                                    <li>
-                                                        {el.minimum_system_requirements?.graphics}
-                                                    </li>
-                                                    <li>
-                                                        {el.minimum_system_requirements?.processor}
-                                                    </li>
-                                                    <li>
-                                                        {el.minimum_system_requirements?.storage}
-                                                    </li>
-                                                </ul>
-                                            </Typography>
-                                            <Typography variant="h5">Screenshots:</Typography>
-                                            <CarouselImages img={el.screenshots}/>
-                                        </>
+                                                {
+                                                    el.minimum_system_requirements && el.minimum_system_requirements.os &&
+                                                    <Typography component="div">
+                                                        Minimum system requirements:
+                                                        <ul>
+                                                            <li>
+                                                                {el.minimum_system_requirements.os}
+                                                            </li>
+                                                            <li>
+                                                                {el.minimum_system_requirements.memory}
+                                                            </li>
+                                                            <li>
+                                                                {el.minimum_system_requirements.graphics}
+                                                            </li>
+                                                            <li>
+                                                                {el.minimum_system_requirements.processor}
+                                                            </li>
+                                                            <li>
+                                                                {el.minimum_system_requirements.storage}
+                                                            </li>
+                                                        </ul>
+                                                    </Typography>
+                                                }
+
+                                                <Typography variant="h5">Screenshots:</Typography>
+                                                <CarouselImages img={el.screenshots}/>
+                                            </>
+                                        }
+                                        return <></>
                                     }
-                                    return <></>
-                                }
-
                                 )
                             }
-
                         </Card>
-                        {
-                            errorMessage && <Alert severity="error">{errorMessage}</Alert>
-                        }
                     </Grid>
+
+            }
+            {
+                errorMessage &&
+                <Grid item xs={12}>
+                    <Alert severity="error">{errorMessage}</Alert>
+                </Grid>
+
             }
         </Grid>
     )

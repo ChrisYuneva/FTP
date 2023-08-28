@@ -29,10 +29,13 @@ export function GameCard({ id, title, date, publisher, genre, img}: GameCardProp
                     <Typography gutterBottom variant="h5" textAlign="center" component="div" sx={{color: '#FFFFFF'}}>
                         {title}
                     </Typography>
-                    <Typography gutterBottom variant="body2" display="flex" alignItems="center" color="text.secondary" sx={{color: '#FFFFFF'}}>
-                        <CalendarMonthIcon sx={{ marginRight: "5px" }}></CalendarMonthIcon>
-                        {date}
-                    </Typography>
+                    {
+                        date !== "Invalid Date" &&
+                        <Typography gutterBottom variant="body2" display="flex" alignItems="center" color="text.secondary" sx={{color: '#FFFFFF'}}>
+                            <CalendarMonthIcon sx={{ marginRight: "5px" }}></CalendarMonthIcon>
+                            {date}
+                        </Typography>
+                    }
                     <Typography gutterBottom variant="body2" display="flex" alignItems="center" color="text.secondary" sx={{color: '#FFFFFF'}}>
                         <ApartmentIcon sx={{marginRight: "5px" }}></ApartmentIcon>
                         {publisher}

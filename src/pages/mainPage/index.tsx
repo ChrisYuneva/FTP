@@ -28,7 +28,7 @@ export function MainPage() {
         "sort-by": ""
     });
 
-    function changeFilter(filterName:string, value: string) {
+    function changeFilter(filterName: string, value: string) {
         setFilter({
             ...filter,
             [filterName]: value
@@ -57,11 +57,10 @@ export function MainPage() {
     }, []);
 
     useEffect(() => {
-        if(filter.platform !== '' || filter.category !== '' || filter["sort-by"] !== '') {
-            if(filter.category?.includes('.')) {
+        if (filter.platform !== '' || filter.category !== '' || filter["sort-by"] !== '') {
+            if (filter.category?.includes('.')) {
                 getGamesListByFilter(filter);
-            }
-            else {
+            } else {
                 getGamesList(filter);
             }
         }
@@ -70,54 +69,59 @@ export function MainPage() {
     return (
         <Grid container flexDirection="column" gap="16px">
             {isLoading
-                ? <Loading isLoading={ isLoading } />
-                : <>
-                    <>
-                        <CustomFilter label='Platform' options={platforms} setValue={(newValue) => changeFilter('platform', newValue)}/>
-                        <ChipMultiSelect label="Categories" options={categories} setValue={(newValue) => changeFilter('category', newValue)}></ChipMultiSelect>
-                        <Grid item>
-                            <Typography gutterBottom variant="h4" sx={{ color: "#8DFD1B" }} textAlign="center">
-                                Sort by
-                            </Typography>
-                            <Grid container display="flex" justifyContent="space-around">
-                                <ButtonCustom text={"Release date"} arrow={false} onClick={() => changeFilter('sort-by', 'release-date')}>
-                                    <CalendarMonthIcon sx={{ color: "#8DFD1B", marginRight: "5px" }} />
-                                </ButtonCustom>
-                                <ButtonCustom text={"Alphabetise"} arrow={false} onClick={() => changeFilter('sort-by', 'alphabetical')}>
-                                    <AbcIcon sx={{ color: '#8DFD1B', marginRight: "5px"}} />
-                                </ButtonCustom>
-                                <ButtonCustom text={"Relevance"} arrow={false} onClick={() => changeFilter('sort-by', 'relevance')}>
-                                    <FavoriteBorderIcon sx={{ color: '#8DFD1B', marginRight: "5px"}} />
-                                </ButtonCustom>
-                            </Grid>
-
+                ? <Loading isLoading={isLoading}/>
+                : !errorMessage && <>
+                <>
+                    <CustomFilter label='Platform' options={platforms}
+                                  setValue={(newValue) => changeFilter('platform', newValue)}/>
+                    <ChipMultiSelect label="Categories" options={categories}
+                                     setValue={(newValue) => changeFilter('category', newValue)}></ChipMultiSelect>
+                    <Grid item>
+                        <Typography gutterBottom variant="h4" sx={{color: "#8DFD1B"}} textAlign="center">
+                            Sort by
+                        </Typography>
+                        <Grid container display="flex" justifyContent="space-around">
+                            <ButtonCustom text={"Release date"} arrow={false}
+                                          onClick={() => changeFilter('sort-by', 'release-date')}>
+                                <CalendarMonthIcon sx={{color: "#8DFD1B", marginRight: "5px"}}/>
+                            </ButtonCustom>
+                            <ButtonCustom text={"Alphabetise"} arrow={false}
+                                          onClick={() => changeFilter('sort-by', 'alphabetical')}>
+                                <AbcIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
+                            </ButtonCustom>
+                            <ButtonCustom text={"Relevance"} arrow={false}
+                                          onClick={() => changeFilter('sort-by', 'relevance')}>
+                                <FavoriteBorderIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
+                            </ButtonCustom>
                         </Grid>
-                    </>
-                    <Grid
-                        container
-                        sx={{ color: '#FFFFFF', minHeight: '100vh' }}
-                        justifyContent={'center'}
-                        spacing={5}
-                    >
-                        {
-                            games.map((el) =>
-                                <GameCard
-                                    key={el.id}
-                                    id={el.id}
-                                    title={el.title}
-                                    date={formatDate(el.release_date)}
-                                    genre={el.genre}
-                                    publisher={el.publisher}
-                                    img={el.thumbnail}
-                                />
-                            )
-                        }
-                        <ButtonArrow />
-                        {
-                            errorMessage && <Alert severity="error">{errorMessage}</Alert>
-                        }
+
                     </Grid>
                 </>
+                <Grid
+                    container
+                    sx={{color: '#FFFFFF', minHeight: '100vh'}}
+                    justifyContent={'center'}
+                    spacing={5}
+                >
+                    {
+                        games.map((el) =>
+                            <GameCard
+                                key={el.id}
+                                id={el.id}
+                                title={el.title}
+                                date={formatDate(el.release_date)}
+                                genre={el.genre}
+                                publisher={el.publisher}
+                                img={el.thumbnail}
+                            />
+                        )
+                    }
+                    <ButtonArrow/>
+                </Grid>
+            </>
+            }
+            {
+                errorMessage && <Alert severity="error">{errorMessage}</Alert>
             }
         </Grid>
     )

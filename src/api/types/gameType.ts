@@ -39,7 +39,7 @@ export type GameTypeById = {
     developer: string,
     release_date: string,
     freetogame_profile_url: string,
-    minimum_system_requirements: MinSystemRequirements,
+    minimum_system_requirements?: MinSystemRequirements,
     screenshots: Screenshots[]
 }
 
