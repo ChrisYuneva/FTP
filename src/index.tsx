@@ -15,12 +15,13 @@ import {GamePage} from "./pages/gamePage";
 import App from "./app/App";
 import {ThemeProvider} from "@mui/material";
 import {THEME} from "./utils/muiTheme";
+import {NotFoundPage} from "./pages/notFoundPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainPage />,
-        errorElement: <div>Sorry, page not found</div>,
+        errorElement: <NotFoundPage />,
     },
     {
         path: "/game/:id",

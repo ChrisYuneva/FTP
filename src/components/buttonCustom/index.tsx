@@ -1,6 +1,7 @@
 import {styled} from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import React from "react";
 
 const ButtonReturnStyle = styled(Button)(() => ({
     color: '#8DFD1B',
@@ -12,19 +13,24 @@ const ButtonReturnStyle = styled(Button)(() => ({
 }));
 
 type ButtonReturnProps = {
+    children?: React.ReactNode,
+    text: string,
+    arrow: boolean,
     onClick: () => void
 }
 
-export function ButtonReturn({onClick}: ButtonReturnProps) {
+export function ButtonCustom({ children, text, arrow, onClick }: ButtonReturnProps) {
     return (
         <ButtonReturnStyle
-            startIcon={
+            onClick={onClick}>
+            {
+                arrow &&
                 <ArrowRightAltIcon
                     sx={{transform: "rotate(180deg)", width: "50px"}}
                 />
             }
-            onClick={onClick}>
-            Return to list
+            { children }
+            { text }
         </ButtonReturnStyle>
     )
 }

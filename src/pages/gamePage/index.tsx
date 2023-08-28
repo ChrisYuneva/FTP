@@ -1,12 +1,12 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {Alert, Card, CardMedia, Grid, Typography} from "@mui/material";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
 import {gamesSlice} from "../../store/games/gamesSlice";
 import {formatDate} from "../../utils/formatDate";
 import {getGameByID} from "../../api/getData";
 import {Loading} from "../../components/loading";
-import {ButtonReturn} from "../../components/buttonReturn";
+import {ButtonCustom} from "../../components/buttonCustom";
 import {CarouselImages} from "../../components/carouselImages";
 
 export function GamePage() {
@@ -30,7 +30,7 @@ export function GamePage() {
                 isLoading
                     ? <Loading isLoading={isLoading}/>
                     : <Grid item width="100%">
-                    <ButtonReturn onClick={() => navigate(-1)} />
+                        <ButtonCustom text={"Return to list"} arrow={true} onClick={() => navigate(-1)}/>
                         <Card
                             sx={{
                                 boxShadow: '3px 4px 10px 0px #8DFD1B',
@@ -47,10 +47,10 @@ export function GamePage() {
                                 image={gameById.thumbnail}
                                 title={gameById.title}
                             />
-                            <Typography variant="body1">Release date: {formatDate(gameById.release_date)}</Typography>
-                            <Typography variant="subtitle1">Genre: {gameById.genre}</Typography>
-                            <Typography variant="subtitle1">Publisher: {gameById.publisher}</Typography>
-                            <Typography variant="subtitle1">Developer: {gameById.developer}</Typography>
+                            <Typography variant="h5">Release date: {formatDate(gameById.release_date)}</Typography>
+                            <Typography variant="h5">Genre: {gameById.genre}</Typography>
+                            <Typography variant="h5">Publisher: {gameById.publisher}</Typography>
+                            <Typography variant="h5">Developer: {gameById.developer}</Typography>
 
                             <Typography component="div">
                                 Minimum system requirements:
@@ -72,7 +72,8 @@ export function GamePage() {
                                     </li>
                                 </ul>
                             </Typography>
-                            <CarouselImages key={gameById.id} img={gameById.screenshots} />
+                            <Typography variant="h5">Screenshots:</Typography>
+                            <CarouselImages img={gameById.screenshots}/>
                         </Card>
                         {
                             errorMessage && <Alert severity="error">{errorMessage}</Alert>

@@ -15,6 +15,7 @@ import AbcIcon from '@mui/icons-material/Abc';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {ChipMultiSelect} from "../../components/chipMultiSelect";
 import Box from "@mui/material/Box";
+import {ButtonCustom} from "../../components/buttonCustom";
 
 export function MainPage() {
     const dispatch = useAppDispatch();
@@ -74,29 +75,23 @@ export function MainPage() {
                     <>
                         <CustomFilter label='Platform' options={platforms} setValue={(newValue) => changeFilter('platform', newValue)}/>
                         <ChipMultiSelect label="Categories" options={categories} setValue={(newValue) => changeFilter('category', newValue)}></ChipMultiSelect>
-                        <Box>
-                            <Typography variant="h4" sx={{ color: "#8DFD1B" }}>
+                        <Grid item>
+                            <Typography gutterBottom variant="h4" sx={{ color: "#8DFD1B" }} textAlign="center">
                                 Sort by
                             </Typography>
-                            <Button onClick={() => changeFilter('sort-by', 'release-date')}>
-                                <CalendarMonthIcon sx={ { color: '#8DFD1B'} } />
-                                <Typography variant="body2" sx={{ color: "#8DFD1B" }}>
-                                    Release date
-                                </Typography>
-                            </Button>
-                            <Button onClick={() => changeFilter('sort-by', 'alphabetical')}>
-                                <AbcIcon sx={ { color: '#8DFD1B'} } />
-                                <Typography variant="body2" sx={{ color: "#8DFD1B" }}>
-                                    Alphabetise
-                                </Typography>
-                            </Button>
-                            <Button onClick={() => changeFilter('sort-by', 'relevance')}>
-                                <FavoriteBorderIcon sx={ { color: '#8DFD1B'} } />
-                                <Typography variant="body2" sx={{ color: "#8DFD1B" }}>
-                                    Relevance
-                                </Typography>
-                            </Button>
-                        </Box>
+                            <Grid container display="flex" justifyContent="space-around">
+                                <ButtonCustom text={"Release date"} arrow={false} onClick={() => changeFilter('sort-by', 'release-date')}>
+                                    <CalendarMonthIcon sx={{ color: "#8DFD1B", marginRight: "5px" }} />
+                                </ButtonCustom>
+                                <ButtonCustom text={"Alphabetise"} arrow={false} onClick={() => changeFilter('sort-by', 'alphabetical')}>
+                                    <AbcIcon sx={{ color: '#8DFD1B', marginRight: "5px"}} />
+                                </ButtonCustom>
+                                <ButtonCustom text={"Relevance"} arrow={false} onClick={() => changeFilter('sort-by', 'relevance')}>
+                                    <FavoriteBorderIcon sx={{ color: '#8DFD1B', marginRight: "5px"}} />
+                                </ButtonCustom>
+                            </Grid>
+
+                        </Grid>
                     </>
                     <Grid
                         container

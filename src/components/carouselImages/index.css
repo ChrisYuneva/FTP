@@ -6,10 +6,10 @@
 
 .item {
     opacity: 0.3;
-    max-height: 300px;
+    max-height: 200px;
 }
 
 .primaryItem {
     opacity: 1;
-    max-height: 300px;
+    max-height: 200px;
 }
