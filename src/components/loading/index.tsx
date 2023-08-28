@@ -10,5 +10,5 @@ export function Loading({ isLoading }: LoadingProps) {
         open={isLoading}
     >
         <CircularProgress color="inherit" size={'100px'} />
-    </Backdrop>
+    </Backdrop>;
 }

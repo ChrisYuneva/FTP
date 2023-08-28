@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -27,61 +27,55 @@ type OptionsType = {
 type ChipMultiSelectProps = {
     options: OptionsType[],
     label: string,
-    setValue: (newValue: string) => void
+    setValue: (newValue: string) => void,
 }
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
     return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
+        fontWeight: personName.indexOf(name) === -1
+            ? theme.typography.fontWeightRegular
+            : theme.typography.fontWeightMedium,
     };
 }
 
-export function ChipMultiSelect({ options, label, setValue }: ChipMultiSelectProps ) {
+export function ChipMultiSelect({options, label, setValue}: ChipMultiSelectProps) {
     const theme = useTheme();
     const [selectOptions, setSelectOptions] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof selectOptions>) => {
-
+    function handleChange(event: SelectChangeEvent<typeof selectOptions>) {
         setValue(typeof event.target.value === 'string' ? event.target.value : event.target.value.join('.'));
-        setSelectOptions(
-            typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value,
-        );
-    };
+        setSelectOptions(typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value);
+    }
 
-    return (
-        <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={selectOptions}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label={label} />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip sx={{color: 'white'}} key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {options.map((option) => (
-                        <MenuItem
-                            key={option.title}
-                            value={option.value}
-                            style={getStyles(option.value, selectOptions, theme)}
-                        >
-                            {option.title}
-                        </MenuItem>
+    return <FormControl sx={{maxWidth: 350, width: "100%"}}>
+        <InputLabel id="demo-multiple-chip-label">
+            {label}
+        </InputLabel>
+        <Select
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            multiple
+            value={selectOptions}
+            onChange={handleChange}
+            input={<OutlinedInput id="select-multiple-chip" label={label}/>}
+            renderValue={(selected) => (
+                <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                    {selected.map((value) => (
+                        <Chip sx={{color: 'black', backgroundColor: "#8DFD1B"}} key={value} label={value}/>
                     ))}
-                </Select>
-            </FormControl>
-        </div>
-    );
+                </Box>
+            )}
+            MenuProps={MenuProps}
+        >
+            {options.map((option) => (
+                <MenuItem
+                    key={option.title}
+                    value={option.value}
+                    style={getStyles(option.value, selectOptions, theme)}
+                >
+                    {option.title}
+                </MenuItem>
+            ))}
+        </Select>
+    </FormControl>;
 }

@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
 import {useEffect, useState} from "react";
 import {getGames, getGamesByTag} from "../../api/getData";
 import {gamesSlice} from "../../store/games/gamesSlice";
-import {Alert, Button, Grid, SelectChangeEvent, Typography} from "@mui/material";
+import {Alert, Grid, Typography} from "@mui/material";
 import {GameCard} from "../../components/gameCard";
 import {ButtonArrow} from "../../components/buttonArrow";
 import {formatDate} from "../../utils/formatDate";
@@ -13,8 +13,8 @@ import {categories, platforms} from "./consts";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AbcIcon from '@mui/icons-material/Abc';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {ChipMultiSelect} from "../../components/chipMultiSelect";
-import Box from "@mui/material/Box";
 import {ButtonCustom} from "../../components/buttonCustom";
 
 export function MainPage() {
@@ -50,6 +50,15 @@ export function MainPage() {
             .catch(err => dispatch(error(err)));
     }
 
+    function resetFilters() {
+        setFilter({
+            platform: "",
+            category: "",
+            "sort-by": ""
+        });
+        getGamesList();
+    }
+
     useEffect(() => {
         if (games.length === 0) {
             getGamesList();
@@ -67,31 +76,78 @@ export function MainPage() {
     }, [filter]);
 
     return (
-        <Grid container flexDirection="column" gap="16px">
+        <Grid container flexDirection="column" gap="16px" sx={{maxWidth: "80%"}}>
             {isLoading
                 ? <Loading isLoading={isLoading}/>
                 : !errorMessage && <>
                 <>
-                    <CustomFilter label='Platform' options={platforms}
-                                  setValue={(newValue) => changeFilter('platform', newValue)}/>
-                    <ChipMultiSelect label="Categories" options={categories}
-                                     setValue={(newValue) => changeFilter('category', newValue)}></ChipMultiSelect>
+                    <Typography
+                        gutterBottom
+                        variant="h4"
+                        sx={{color: "#E7E7E7"}}
+                        textAlign="center"
+                    >
+                        Filter by
+                    </Typography>
+                    <Grid container display="flex" justifyContent="space-between">
+
+                        <CustomFilter
+                            label='Platform'
+                            options={platforms}
+                            setValue={(newValue) => changeFilter('platform', newValue)}
+                        />
+                        <ChipMultiSelect
+                            label="Categories"
+                            options={categories}
+                            setValue={(newValue) => changeFilter('category', newValue)}
+                        />
+                    </Grid>
                     <Grid item>
-                        <Typography gutterBottom variant="h4" sx={{color: "#8DFD1B"}} textAlign="center">
+                        <Typography
+                            gutterBottom
+                            variant="h4"
+                            sx={{color: "#E7E7E7"}}
+                            textAlign="center"
+                        >
                             Sort by
                         </Typography>
                         <Grid container display="flex" justifyContent="space-around">
-                            <ButtonCustom text={"Release date"} arrow={false}
-                                          onClick={() => changeFilter('sort-by', 'release-date')}>
-                                <CalendarMonthIcon sx={{color: "#8DFD1B", marginRight: "5px"}}/>
+                            <ButtonCustom
+                                text="Release date"
+                                arrow={false}
+                                active={filter["sort-by"] === 'release-date'}
+                                onClick={() => changeFilter('sort-by', 'release-date')}
+                            >
+                                <CalendarMonthIcon
+                                    sx={{
+                                        color: "#8DFD1B",
+                                        marginRight: "5px",
+                                    }}
+                                />
                             </ButtonCustom>
-                            <ButtonCustom text={"Alphabetise"} arrow={false}
-                                          onClick={() => changeFilter('sort-by', 'alphabetical')}>
+                            <ButtonCustom
+                                text="Alphabetise"
+                                arrow={false}
+                                active={filter["sort-by"] === 'alphabetical'}
+                                onClick={() => changeFilter('sort-by', 'alphabetical')}
+                            >
                                 <AbcIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
                             </ButtonCustom>
-                            <ButtonCustom text={"Relevance"} arrow={false}
-                                          onClick={() => changeFilter('sort-by', 'relevance')}>
+                            <ButtonCustom
+                                text="Relevance"
+                                arrow={false}
+                                active={filter["sort-by"] === 'relevance'}
+                                onClick={() => changeFilter('sort-by', 'relevance')}
+                            >
                                 <FavoriteBorderIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
+                            </ButtonCustom>
+                            <ButtonCustom
+                                text="Reset filters"
+                                arrow={false}
+                                active={false}
+                                onClick={resetFilters}
+                            >
+                                <RestartAltIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
                             </ButtonCustom>
                         </Grid>
 
@@ -99,25 +155,34 @@ export function MainPage() {
                 </>
                 <Grid
                     container
-                    sx={{color: '#FFFFFF', minHeight: '100vh'}}
+                    sx={{color: '#FFFFFF'}}
                     justifyContent={'center'}
                     spacing={5}
                 >
                     {
-                        games.map((el) =>
-                            <GameCard
-                                key={el.id}
-                                id={el.id}
-                                title={el.title}
-                                date={formatDate(el.release_date)}
-                                genre={el.genre}
-                                publisher={el.publisher}
-                                img={el.thumbnail}
-                            />
-                        )
+                        games.length
+                            ? games.map((el) =>
+                                <GameCard
+                                    key={el.id}
+                                    id={el.id}
+                                    title={el.title}
+                                    date={formatDate(el.release_date)}
+                                    genre={el.genre}
+                                    publisher={el.publisher}
+                                    img={el.thumbnail}
+                                />
+                            )
+                            :
+                            <Typography
+                                variant="h4"
+                                sx={{color: "#8DFD1B", marginTop: "10%"}}
+                                textAlign="center"
+                            >
+                                Sorry, nothing was found for these filters =(
+                            </Typography>
                     }
-                    <ButtonArrow/>
                 </Grid>
+                <ButtonArrow/>
             </>
             }
             {

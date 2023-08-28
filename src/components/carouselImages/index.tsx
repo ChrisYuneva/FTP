@@ -1,6 +1,6 @@
-import {Screenshots} from "../../api/types/gameType";
+import { Screenshots } from "../../api/types/gameType";
 import {Grid, ImageList, ImageListItem, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import './index.css';
 
@@ -27,13 +27,24 @@ export function CarouselImages({img}: CarouselImagesProps) {
         }
     }
 
-    return (
-        <>
-            {
-                img.length &&
-                <Grid container justifyContent="center">
-
-                    <img src={primaryImg} alt="Primary image" className={"primary"}/>
+    return <>
+        {
+            img.length
+                ? <Grid
+                    container={true}
+                    justifyContent="center"
+                >
+                    <Typography
+                        gutterBottom
+                        variant="h5"
+                    >
+                        Screenshots:
+                    </Typography>
+                    <img
+                        src={primaryImg}
+                        alt="Primary image"
+                        className={"primary"}
+                    />
                     <ImageList
                         sx={{
                             height: 200,
@@ -56,7 +67,10 @@ export function CarouselImages({img}: CarouselImagesProps) {
                     >
                         {
                             img.map(el =>
-                                <ImageListItem key={el.id} sx={{cursor: 'pointer'}}>
+                                <ImageListItem
+                                    key={el.id}
+                                    sx={{cursor: 'pointer'}}
+                                >
                                     <img
                                         src={el.image}
                                         alt={`Image id: ${el.id}`}
@@ -70,7 +84,7 @@ export function CarouselImages({img}: CarouselImagesProps) {
                         }
                     </ImageList>
                 </Grid>
-            }
-        </>
-    )
+                : <></>
+        }
+    </>
 }

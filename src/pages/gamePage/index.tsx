@@ -1,13 +1,13 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {Alert, Card, CardMedia, Grid, Typography} from "@mui/material";
-import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
-import {gamesSlice} from "../../store/games/gamesSlice";
-import {formatDate} from "../../utils/formatDate";
-import {getGameByID} from "../../api/getData";
-import {Loading} from "../../components/loading";
-import {ButtonCustom} from "../../components/buttonCustom";
-import {CarouselImages} from "../../components/carouselImages";
+import { useNavigate, useParams } from "react-router-dom";
+import { Alert, Box, Card, CardMedia, Grid, Typography } from "@mui/material";
+import React, { useEffect} from "react";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
+import { gamesSlice } from "../../store/games/gamesSlice";
+import { formatDate } from "../../utils/formatDate";
+import { getGameByID } from "../../api/getData";
+import { Loading } from "../../components/loading";
+import { ButtonCustom } from "../../components/buttonCustom";
+import { CarouselImages } from "../../components/carouselImages";
 
 export function GamePage() {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ export function GamePage() {
 
     const dispatch = useAppDispatch();
     const {loading, getById, error} = gamesSlice.actions;
-    const {isLoading, games, gameById, errorMessage} = useAppSelector(state => state.games);
+    const {isLoading, gameById, errorMessage} = useAppSelector(state => state.games);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -31,19 +31,24 @@ export function GamePage() {
     }, [id]);
 
     return (
-        <Grid container>
+        <Grid container sx={{maxWidth: "80%"}}>
             {
                 isLoading
                     ? <Loading isLoading={isLoading}/>
                     : !errorMessage &&
                     <Grid item width="100%">
-                        <ButtonCustom text={"Return to list"} arrow={true} onClick={() => navigate(-1)}/>
+                        <ButtonCustom
+                            text={"Return to list"}
+                            arrow={true}
+                            active={false}
+                            onClick={() => navigate(-1)}
+                        />
                         <Card
                             sx={{
                                 boxShadow: '3px 4px 10px 0px #8DFD1B',
                                 backgroundColor: '#1A1A1A',
                                 color: '#FFFFFF',
-                                padding: '16px',
+                                padding: '16px 24px',
                                 border: '1px solid #8DFD1B',
                                 marginTop: '24px'
                             }}
@@ -52,7 +57,12 @@ export function GamePage() {
                                 gameById.map(el => {
                                         if (el.id === Number(id)) {
                                             return <>
-                                                <Typography variant="h4" textAlign='center'>{el.title}</Typography>
+                                                <Typography
+                                                    variant="h4"
+                                                    textAlign='center'
+                                                >
+                                                    {el.title}
+                                                </Typography>
                                                 <CardMedia
                                                     sx={{height: 350, width: '100%', backgroundSize: 'contain'}}
                                                     image={el.thumbnail}
@@ -60,14 +70,18 @@ export function GamePage() {
                                                 />
                                                 {
                                                     formatDate(el.release_date) !== "Invalid Date" &&
-                                                    <Typography variant="h5">
-                                                        Release date: {formatDate(el.release_date)}
-                                                    </Typography>
+                                                    <Box display="flex" flexDirection="row">
+                                                        <Typography variant="h5">
+                                                            Release date:
+                                                        </Typography>
+                                                        <Typography variant="h5" sx={{color: "#8DFD1B"}}>
+                                                            {formatDate(el.release_date)}
+                                                        </Typography>
+                                                    </Box>
                                                 }
                                                 <Typography variant="h5">Genre: {el.genre}</Typography>
                                                 <Typography variant="h5">Publisher: {el.publisher}</Typography>
                                                 <Typography variant="h5">Developer: {el.developer}</Typography>
-
                                                 {
                                                     el.minimum_system_requirements && el.minimum_system_requirements.os &&
                                                     <Typography component="div">
@@ -91,12 +105,10 @@ export function GamePage() {
                                                         </ul>
                                                     </Typography>
                                                 }
-
-                                                <Typography variant="h5">Screenshots:</Typography>
                                                 <CarouselImages img={el.screenshots}/>
                                             </>
                                         }
-                                        return <></>
+                                        return <span>Sorry, game not found =(</span>
                                     }
                                 )
                             }

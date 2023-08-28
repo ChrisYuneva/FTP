@@ -9,10 +9,10 @@ export function NotFoundPage() {
     return (
         <div className="error-wrap">
             <div className="error-404-wrap">
-                <h2 data-t="404" className="h1">404</h2>
+                <h2 data-t="404">404</h2>
             </div>
             <h3>Sorry, page not found. Please return to the home page.</h3>
-            <ButtonCustom text={"Return to the home page"} arrow={true} onClick={() => navigate("/")} />
+            <ButtonCustom text={"Return to the home page"} arrow={true} active={false} onClick={() => navigate("/")} />
         </div>
     )
 }

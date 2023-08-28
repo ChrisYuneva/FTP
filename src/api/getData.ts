@@ -11,19 +11,18 @@ function api<T>(url: string, headers?: HeadersInit): Promise<T> {
                 'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
             }
         }
-    )
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch').message;
-            }
-            return response.json() as Promise<T>
-        })
+    ).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch').message;
+        }
+        return response.json() as Promise<T>
+    })
 }
 
 export function toQueryString<T>(obj?: T): string {
     const queryString = [];
-    for(let key in obj) {
-        if(obj[key]) {
+    for (let key in obj) {
+        if (obj[key]) {
             queryString.push(`${key}=${obj[key]}`);
         }
     }
@@ -34,14 +33,14 @@ export function toQueryString<T>(obj?: T): string {
 export function getGames(params?: GameSortParams) {
     return api<GameType[]>(
         `${API_PATH}?${toQueryString<GameSortParams>(params)}`,
-        { method: 'GET' }
+        {method: 'GET'}
     );
 }
 
 export function getGameByID(id: string) {
     return api<GameTypeById>(
         `${API_PATH_ID}${id}`,
-        { method: 'GET' }
+        {method: 'GET'}
     );
 }
 
@@ -54,6 +53,6 @@ export function getGamesByTag(params?: GameSortParams) {
 
     return api<GameType[]>(
         `${API_PATH_FILTER}?${toQueryString<GameSortByTagParams>(paramsByTag)}`,
-        { method: 'GET' }
+        {method: 'GET'}
     )
 }

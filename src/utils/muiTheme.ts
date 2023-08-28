@@ -2,9 +2,12 @@ import {createTheme} from "@mui/material";
 
 const mainColor = '#8DFD1B';
 
-// css-1pcou3v-MuiFormLabel-root-MuiInputLabel-root.Mui-focused
-
 export const THEME = createTheme({
+    palette: {
+        primary: {
+            main: mainColor
+        }
+    },
     components: {
         MuiInputLabel: {
             styleOverrides: {
@@ -24,6 +27,7 @@ export const THEME = createTheme({
                         '& .MuiOutlinedInput-notchedOutline': {
                             borderColor: mainColor,
                         },
+                        color: mainColor
                     },
                     '&:hover': {
                         '& .MuiOutlinedInput-notchedOutline': {
@@ -32,6 +36,31 @@ export const THEME = createTheme({
                     },
                     '&.MuiSvgIcon-root-MuiSelect-icon': {
                         color: mainColor
+                    }
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                icon: {
+                    color: mainColor
+                }
+            }
+        },
+        MuiList: {
+            styleOverrides: {
+                root: {
+                    color: mainColor,
+                    backgroundColor: "#1A1A1A",
+                    borderRadius: '3px'
+                }
+            }
+        },
+        MuiMenuItem: {
+            styleOverrides: {
+                root: {
+                    ":hover": {
+                        backgroundColor: "#3d3d3d"
                     }
                 }
             }
