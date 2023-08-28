@@ -5,7 +5,7 @@ import {initialValueGame} from "./functions";
 
 const initialState: InitialType = {
     games: [],
-    gameById: initialValueGame(),
+    gameById: [],
     isLoading: false,
     errorMessage: ''
 }
@@ -22,7 +22,9 @@ export const gamesSlice = createSlice({
             state.isLoading = false;
         },
         getById(state, action: PayloadAction<GameTypeById>) {
-            state.gameById = action.payload;
+            if (state.gameById.filter(el => el.id === action.payload.id).length === 0) {
+                state.gameById = [...state.gameById, action.payload];
+            }
             state.isLoading = false;
         },
         error(state, action: PayloadAction<string>) {

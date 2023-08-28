@@ -15,13 +15,15 @@ export function GamePage() {
 
     const dispatch = useAppDispatch();
     const {loading, getById, error} = gamesSlice.actions;
-    const {isLoading, gameById, errorMessage} = useAppSelector(state => state.games);
+    const {isLoading, games, gameById, errorMessage} = useAppSelector(state => state.games);
 
     useEffect(() => {
-        dispatch(loading());
-        getGameByID(id ?? '')
-            .then(response => dispatch(getById(response)))
-            .catch(err => dispatch(error(err)));
+        if(gameById.filter(el => el.id === Number(id)).length === 0) {
+            dispatch(loading());
+            getGameByID(id ?? '')
+                .then(response => dispatch(getById(response)))
+                .catch(err => dispatch(error(err)));
+        }
     }, [id]);
 
     return (
@@ -41,39 +43,51 @@ export function GamePage() {
                                 marginTop: '24px'
                             }}
                         >
-                            <Typography variant="h4" textAlign='center'>{gameById.title}</Typography>
-                            <CardMedia
-                                sx={{height: 350, width: '100%', backgroundSize: 'contain'}}
-                                image={gameById.thumbnail}
-                                title={gameById.title}
-                            />
-                            <Typography variant="h5">Release date: {formatDate(gameById.release_date)}</Typography>
-                            <Typography variant="h5">Genre: {gameById.genre}</Typography>
-                            <Typography variant="h5">Publisher: {gameById.publisher}</Typography>
-                            <Typography variant="h5">Developer: {gameById.developer}</Typography>
+                            {
+                                gameById.map(el => {
+                                    if(el.id === Number(id)) {
+                                        return <>
+                                            <Typography variant="h4" textAlign='center'>{el.title}</Typography>
+                                            <CardMedia
+                                                sx={{height: 350, width: '100%', backgroundSize: 'contain'}}
+                                                image={el.thumbnail}
+                                                title={el.title}
+                                            />
+                                            <Typography variant="h5">Release date: {formatDate(el.release_date)}</Typography>
+                                            <Typography variant="h5">Genre: {el.genre}</Typography>
+                                            <Typography variant="h5">Publisher: {el.publisher}</Typography>
+                                            <Typography variant="h5">Developer: {el.developer}</Typography>
 
-                            <Typography component="div">
-                                Minimum system requirements:
-                                <ul>
-                                    <li>
-                                        {gameById.minimum_system_requirements?.os}
-                                    </li>
-                                    <li>
-                                        {gameById.minimum_system_requirements?.memory}
-                                    </li>
-                                    <li>
-                                        {gameById.minimum_system_requirements?.graphics}
-                                    </li>
-                                    <li>
-                                        {gameById.minimum_system_requirements?.processor}
-                                    </li>
-                                    <li>
-                                        {gameById.minimum_system_requirements?.storage}
-                                    </li>
-                                </ul>
-                            </Typography>
-                            <Typography variant="h5">Screenshots:</Typography>
-                            <CarouselImages img={gameById.screenshots}/>
+                                            <Typography component="div">
+                                                Minimum system requirements:
+                                                <ul>
+                                                    <li>
+                                                        {el.minimum_system_requirements?.os}
+                                                    </li>
+                                                    <li>
+                                                        {el.minimum_system_requirements?.memory}
+                                                    </li>
+                                                    <li>
+                                                        {el.minimum_system_requirements?.graphics}
+                                                    </li>
+                                                    <li>
+                                                        {el.minimum_system_requirements?.processor}
+                                                    </li>
+                                                    <li>
+                                                        {el.minimum_system_requirements?.storage}
+                                                    </li>
+                                                </ul>
+                                            </Typography>
+                                            <Typography variant="h5">Screenshots:</Typography>
+                                            <CarouselImages img={el.screenshots}/>
+                                        </>
+                                    }
+                                    return <></>
+                                }
+
+                                )
+                            }
+
                         </Card>
                         {
                             errorMessage && <Alert severity="error">{errorMessage}</Alert>
