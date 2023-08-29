@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {Alert, Box, Card, CardMedia, Divider, Grid, List, ListItem, Typography} from "@mui/material";
-import React, { useEffect} from "react";
+import {Alert, Card, CardMedia, Grid, List, Typography} from "@mui/material";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
 import { gamesSlice } from "../../store/games/gamesSlice";
 import { formatDate } from "../../utils/formatDate";
@@ -61,7 +61,8 @@ export function GamePage() {
                                             return <>
                                                 <Typography
                                                     variant="h4"
-                                                    textAlign='center'
+                                                    textAlign="center"
+                                                    gutterBottom
                                                 >
                                                     {el.title}
                                                 </Typography>

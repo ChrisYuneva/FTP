@@ -9,15 +9,20 @@ type OptionsType = {
 type CustomFilterProps = {
     options: OptionsType[],
     label: string,
+    reset: boolean,
     setValue: (newValue: string) => void
 }
 
-export default function CustomFilter({options, label, setValue}: CustomFilterProps) {
+export default function CustomFilter({options, label, reset, setValue}: CustomFilterProps) {
     const [valueState, setValueState] = useState("");
 
     useEffect(() => {
         setValue(valueState);
     }, [valueState]);
+
+    useEffect(() => {
+        setValueState('');
+    }, [reset]);
 
     return <FormControl sx={{maxWidth: "350px", width: "100%"}}>
         <InputLabel

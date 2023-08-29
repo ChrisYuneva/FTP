@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -27,6 +27,7 @@ type OptionsType = {
 type ChipMultiSelectProps = {
     options: OptionsType[],
     label: string,
+    reset: boolean,
     setValue: (newValue: string) => void,
 }
 
@@ -38,7 +39,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export function ChipMultiSelect({options, label, setValue}: ChipMultiSelectProps) {
+export function ChipMultiSelect({options, label, reset, setValue}: ChipMultiSelectProps) {
     const theme = useTheme();
     const [selectOptions, setSelectOptions] = React.useState<string[]>([]);
 
@@ -46,6 +47,10 @@ export function ChipMultiSelect({options, label, setValue}: ChipMultiSelectProps
         setValue(typeof event.target.value === 'string' ? event.target.value : event.target.value.join('.'));
         setSelectOptions(typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value);
     }
+
+    useEffect(() => {
+        setSelectOptions([]);
+    }, [reset]);
 
     return <FormControl sx={{maxWidth: 350, width: "100%"}}>
         <InputLabel id="demo-multiple-chip-label">

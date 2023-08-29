@@ -27,6 +27,7 @@ export function MainPage() {
         category: "",
         "sort-by": ""
     });
+    const [reset, setReset] = useState(false);
 
     function changeFilter(filterName: string, value: string) {
         setFilter({
@@ -56,6 +57,7 @@ export function MainPage() {
             category: "",
             "sort-by": ""
         });
+        setReset((prevState) => !prevState);
         getGamesList();
     }
 
@@ -94,11 +96,13 @@ export function MainPage() {
                         <CustomFilter
                             label='Platform'
                             options={platforms}
+                            reset={reset}
                             setValue={(newValue) => changeFilter('platform', newValue)}
                         />
                         <ChipMultiSelect
                             label="Categories"
                             options={categories}
+                            reset={reset}
                             setValue={(newValue) => changeFilter('category', newValue)}
                         />
                     </Grid>
