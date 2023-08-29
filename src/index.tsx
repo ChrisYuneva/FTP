@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import { store } from './store/store';
+import { store, persistor } from './store/store';
 import {Provider} from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 
 import './index.css';
 import '@fontsource/roboto/300.css';
@@ -36,10 +37,12 @@ root.render(
     <React.StrictMode>
         <ThemeProvider theme={ THEME }>
             <Provider store={store}>
-                <App>
-                    <CssBaseline />
-                    <RouterProvider router={router}/>
-                </App>
+                <PersistGate loading={null} persistor={persistor}>
+                    <App>
+                        <CssBaseline />
+                        <RouterProvider router={router}/>
+                    </App>
+                </PersistGate>
             </Provider>
         </ThemeProvider>
     </React.StrictMode>
