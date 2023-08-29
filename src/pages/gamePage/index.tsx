@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Alert, Box, Card, CardMedia, Grid, Typography } from "@mui/material";
+import {Alert, Box, Card, CardMedia, Divider, Grid, List, ListItem, Typography} from "@mui/material";
 import React, { useEffect} from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
 import { gamesSlice } from "../../store/games/gamesSlice";
@@ -8,6 +8,8 @@ import { getGameByID } from "../../api/getData";
 import { Loading } from "../../components/loading";
 import { ButtonCustom } from "../../components/buttonCustom";
 import { CarouselImages } from "../../components/carouselImages";
+import {GameMinRequirements} from "../../components/gameMinRequirements";
+import {GameDescription} from "../../components/gameDescription";
 
 export function GamePage() {
     const navigate = useNavigate();
@@ -70,45 +72,28 @@ export function GamePage() {
                                                 />
                                                 {
                                                     formatDate(el.release_date) !== "Invalid Date" &&
-                                                    <Box display="flex" flexDirection="row">
-                                                        <Typography variant="h5">
-                                                            Release date:
-                                                        </Typography>
-                                                        <Typography variant="h5" sx={{color: "#8DFD1B"}}>
-                                                            {formatDate(el.release_date)}
-                                                        </Typography>
-                                                    </Box>
-                                                }
-                                                <Typography variant="h5">Genre: {el.genre}</Typography>
-                                                <Typography variant="h5">Publisher: {el.publisher}</Typography>
-                                                <Typography variant="h5">Developer: {el.developer}</Typography>
-                                                {
-                                                    el.minimum_system_requirements && el.minimum_system_requirements.os &&
-                                                    <Typography component="div">
-                                                        Minimum system requirements:
-                                                        <ul>
-                                                            <li>
-                                                                {el.minimum_system_requirements.os}
-                                                            </li>
-                                                            <li>
-                                                                {el.minimum_system_requirements.memory}
-                                                            </li>
-                                                            <li>
-                                                                {el.minimum_system_requirements.graphics}
-                                                            </li>
-                                                            <li>
-                                                                {el.minimum_system_requirements.processor}
-                                                            </li>
-                                                            <li>
-                                                                {el.minimum_system_requirements.storage}
-                                                            </li>
-                                                        </ul>
-                                                    </Typography>
+                                                    <Grid container marginTop="16px">
+                                                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                            <List sx={{color: "white"}}>
+                                                                <GameDescription title="Release date: " value={el.release_date} isDate={true}/>
+                                                                <GameDescription title="Genre: " value={el.genre} />
+                                                                <GameDescription title="Publisher: " value={el.publisher} />
+                                                                <GameDescription title="Developer: " value={el.developer} />
+                                                            </List>
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                                            {
+                                                                el.minimum_system_requirements && el.minimum_system_requirements.os &&
+
+                                                                <GameMinRequirements minRequirements={el.minimum_system_requirements} />
+                                                            }
+                                                        </Grid>
+                                                     </Grid>
                                                 }
                                                 <CarouselImages img={el.screenshots}/>
                                             </>
                                         }
-                                        return <span>Sorry, game not found =(</span>
+                                        // todo error message
                                     }
                                 )
                             }
