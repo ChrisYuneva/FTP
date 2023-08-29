@@ -91,8 +91,7 @@ export function MainPage() {
                     >
                         Filter by
                     </Typography>
-                    <Grid container display="flex" justifyContent="space-between">
-
+                    <Grid container display="flex" justifyContent="space-between" flexWrap="nowrap">
                         <CustomFilter
                             label='Platform'
                             options={platforms}
