@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {Alert, Card, CardMedia, Grid, List, Typography} from "@mui/material";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
-import { gamesSlice } from "../../store/games/gamesSlice";
+import { gameByIdSlice } from "../../store/gameById/gameByIdSlice";
 import { formatDate } from "../../utils/formatDate";
 import { getGameByID } from "../../api/getData";
 import { Loading } from "../../components/loading";
@@ -16,18 +16,25 @@ export function GamePage() {
     const {id} = useParams<{ id: string }>();
 
     const dispatch = useAppDispatch();
-    const {loading, getById, error} = gamesSlice.actions;
-    const {isLoading, gameById, errorMessage} = useAppSelector(state => state.games);
+    const {loading, getGameById, purge, error} = gameByIdSlice.actions;
+    const {isLoading, gameById, errorMessage} = useAppSelector(state => state.gamesById);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        const timer = setInterval(async () => {
+            localStorage.removeItem('persist:root');
+        }, 1000 * 60 * 5);
+
+        return () => {
+            clearInterval(timer);
+        }
     }, []);
 
     useEffect(() => {
         if (gameById.filter(el => el.id === Number(id)).length === 0) {
             dispatch(loading());
             getGameByID(id ?? '')
-                .then(response => dispatch(getById(response)))
+                .then(response => dispatch(getGameById(response)))
                 .catch(err => dispatch(error(err)));
         }
     }, [id]);
@@ -96,7 +103,6 @@ export function GamePage() {
                                                         <CarouselImages img={el.screenshots}/>
                                                     </>
                                                 }
-                                                // todo error message
                                             }
                                         )
                                     }

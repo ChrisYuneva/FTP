@@ -10,14 +10,17 @@ import { persistStore,
     PURGE,
     REGISTER, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {gameByIdSlice} from "./gameById/gameByIdSlice";
 
 const rootReducer = combineReducers({
-    games: gamesSlice.reducer
+    games: gamesSlice.reducer,
+    gamesById: gameByIdSlice.reducer
 })
 
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist: ['games']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

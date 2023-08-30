@@ -13,10 +13,21 @@ function api<T>(url: string, headers?: HeadersInit): Promise<T> {
         }
     ).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to fetch').message;
+            throw new Error('Failed to fetch =( Please retry later.').message;
         }
-        return response.json() as Promise<T>
+        return response.json() as Promise<T>;
     })
+}
+
+async function retry<T>(fn: () => Promise<T> | T, retries: number): Promise<T> {
+    try {
+        return await fn();
+    } catch (error) {
+        if (retries === 0) {
+            throw error;
+        }
+        return retry(fn, retries - 1);
+    }
 }
 
 export function toQueryString<T>(obj?: T): string {
@@ -31,16 +42,20 @@ export function toQueryString<T>(obj?: T): string {
 }
 
 export function getGames(params?: GameSortParams) {
-    return api<GameType[]>(
-        `${API_PATH}?${toQueryString<GameSortParams>(params)}`,
-        {method: 'GET'}
+    return retry(
+        () => api<GameType[]>(
+            `${API_PATH}?${toQueryString<GameSortParams>(params)}`,
+            {method: 'GET'},
+        ),3
     );
 }
 
 export function getGameByID(id: string) {
-    return api<GameTypeById>(
-        `${API_PATH_ID}${id}`,
-        {method: 'GET'}
+    return retry(
+        () => api<GameTypeById>(
+            `${API_PATH_ID}${id}`,
+            {method: 'GET'},
+        ), 3
     );
 }
 
@@ -51,8 +66,10 @@ export function getGamesByTag(params?: GameSortParams) {
         "sort-by": params?.["sort-by"]
     };
 
-    return api<GameType[]>(
-        `${API_PATH_FILTER}?${toQueryString<GameSortByTagParams>(paramsByTag)}`,
-        {method: 'GET'}
-    )
+    return retry(
+        () => api<GameType[]>(
+            `${API_PATH_FILTER}?${toQueryString<GameSortByTagParams>(paramsByTag)}`,
+            {method: 'GET'},
+        ), 3
+    );
 }

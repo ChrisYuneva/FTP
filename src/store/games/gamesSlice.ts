@@ -1,11 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {InitialType} from "../types/types";
-import {GameType, GameTypeById} from "../../api/types/gameType";
-import {initialValueGame} from "./functions";
+import {InitialTypeGame} from "../types/types";
+import {GameType} from "../../api/types/gameType";
 
-const initialState: InitialType = {
+const initialState: InitialTypeGame = {
     games: [],
-    gameById: [],
     isLoading: false,
     errorMessage: ''
 }
@@ -19,12 +17,6 @@ export const gamesSlice = createSlice({
         },
         get(state, action: PayloadAction<GameType[]>) {
             state.games = action.payload;
-            state.isLoading = false;
-        },
-        getById(state, action: PayloadAction<GameTypeById>) {
-            if (state.gameById.filter(el => el.id === action.payload.id).length === 0) {
-                state.gameById = [...state.gameById, action.payload];
-            }
             state.isLoading = false;
         },
         error(state, action: PayloadAction<string>) {

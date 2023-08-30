@@ -47,10 +47,10 @@ export function CarouselImages({img}: CarouselImagesProps) {
                     />
                     <ImageList
                         sx={{
-                            height: 200,
+                            height: 150,
                             gridAutoFlow: "column",
-                            gridTemplateColumns: "repeat(auto-fit, minmax(200px,1fr)) !important",
-                            gridAutoColumns: "minmax(200px, 1fr)",
+                            gridTemplateColumns: "repeat(auto-fit, minmax(150px,1fr)) !important",
+                            gridAutoColumns: "minmax(150px, 1fr)",
                             "&::-webkit-scrollbar-track": {
                                 "-webkit-box-shadow": "inset 0 0 6px #787878",
                                 borderRadius: "10px"

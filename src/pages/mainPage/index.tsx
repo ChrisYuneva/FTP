@@ -1,8 +1,8 @@
 import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {getGames, getGamesByTag} from "../../api/getData";
 import {gamesSlice} from "../../store/games/gamesSlice";
-import {Alert, Grid, Typography} from "@mui/material";
+import {Alert, Grid, TextField, Typography} from "@mui/material";
 import {GameCard} from "../../components/gameCard";
 import {ButtonArrow} from "../../components/buttonArrow";
 import {formatDate} from "../../utils/formatDate";
@@ -28,6 +28,7 @@ export function MainPage() {
         "sort-by": ""
     });
     const [reset, setReset] = useState(false);
+    const [search, setSearch] = useState('');
 
     function changeFilter(filterName: string, value: string) {
         setFilter({
@@ -58,6 +59,7 @@ export function MainPage() {
             "sort-by": ""
         });
         setReset((prevState) => !prevState);
+        setSearch('');
         getGamesList();
     }
 
@@ -91,7 +93,7 @@ export function MainPage() {
                     >
                         Filter by
                     </Typography>
-                    <Grid container display="flex" justifyContent="space-between" flexWrap="nowrap">
+                    <Grid container display="flex" justifyContent="space-between" flexWrap="nowrap" gap="8px">
                         <CustomFilter
                             label='Platform'
                             options={platforms}
@@ -153,7 +155,15 @@ export function MainPage() {
                                 <RestartAltIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
                             </ButtonCustom>
                         </Grid>
-
+                        <TextField
+                            label="Search game"
+                            value={search}
+                            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                setSearch(event.target.value);
+                            }}
+                            sx={{ marginTop: "16px"}}
+                            fullWidth={true}
+                        />
                     </Grid>
                 </>
                 <Grid
@@ -164,17 +174,21 @@ export function MainPage() {
                 >
                     {
                         games.length
-                            ? games.map((el) =>
-                                <GameCard
-                                    key={el.id}
-                                    id={el.id}
-                                    title={el.title}
-                                    date={formatDate(el.release_date)}
-                                    genre={el.genre}
-                                    publisher={el.publisher}
-                                    img={el.thumbnail}
-                                />
-                            )
+                            ? games.map((el) => {
+                                if(el.title.toLowerCase().includes(search.toLowerCase())) {
+                                    return <GameCard
+                                        key={el.id}
+                                        id={el.id}
+                                        title={el.title}
+                                        date={formatDate(el.release_date)}
+                                        genre={el.genre}
+                                        publisher={el.publisher}
+                                        img={el.thumbnail}
+                                    />
+                                }
+
+                                return <></>
+                            })
                             :
                             <Typography
                                 variant="h4"
