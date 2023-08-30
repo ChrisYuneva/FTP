@@ -15,16 +15,16 @@ export function GameMinRequirements({ minRequirements }: GameMinRequirementsProp
                     OS: {minRequirements.os}
                 </li>
                 <li>
-                    Memory: {minRequirements.memory}
+                    RAM: {minRequirements.memory}
                 </li>
                 <li>
-                    {minRequirements.graphics}
+                    Video card: {minRequirements.graphics}
                 </li>
                 <li>
-                    Processor: {minRequirements.processor}
+                    CP: {minRequirements.processor}
                 </li>
                 <li>
-                    Storage: {minRequirements.storage}
+                    HDD: {minRequirements.storage}
                 </li>
             </ul>
         </Typography>

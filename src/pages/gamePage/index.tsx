@@ -84,23 +84,33 @@ export function GamePage() {
                                                                         {
                                                                             formatDate(el.release_date) !== "Invalid Date" &&
                                                                             <>
-                                                                                <GameDescription title="Release date: "
-                                                                                                 value={el.release_date} isDate={true}/>
+                                                                                <GameDescription
+                                                                                    title="Release date: "
+                                                                                    value={el.release_date}
+                                                                                    isDate={true}
+                                                                                />
                                                                             </>
                                                                         }
-                                                                        <GameDescription title="Genre: " value={el.genre}/>
-                                                                        <GameDescription title="Publisher: "
-                                                                                         value={el.publisher}/>
-                                                                        <GameDescription title="Developer: "
-                                                                                         value={el.developer}/>
+                                                                        <GameDescription
+                                                                            title="Genre: "
+                                                                            value={el.genre}
+                                                                        />
+                                                                        <GameDescription
+                                                                            title="Publisher: "
+                                                                            value={el.publisher}
+                                                                        />
+                                                                        <GameDescription
+                                                                            title="Developer: "
+                                                                            value={el.developer}
+                                                                        />
                                                                     </List>
                                                                 </Grid>
                                                                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                                                     {
                                                                         el.minimum_system_requirements && el.minimum_system_requirements.os &&
-
                                                                         <GameMinRequirements
-                                                                            minRequirements={el.minimum_system_requirements}/>
+                                                                            minRequirements={el.minimum_system_requirements}
+                                                                        />
                                                                     }
                                                                 </Grid>
                                                             </Grid>
@@ -118,7 +128,16 @@ export function GamePage() {
             {
                 errorMessage &&
                 <Grid item xs={12}>
-                    <Alert severity="error">{ errorMessage }</Alert>
+                    <Alert severity="error" sx={{ marginBottom: "16px" }}>{ errorMessage }</Alert>
+                    <ButtonCustom
+                        text="Return to the home page"
+                        arrow={true}
+                        active={false}
+                        onClick={() => {
+                            localStorage.removeItem('persist:root');
+                            navigate("/")
+                        }}
+                    />
                 </Grid>
             }
         </Grid>
