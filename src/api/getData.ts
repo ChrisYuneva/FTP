@@ -1,5 +1,5 @@
-import {API_PATH, API_PATH_FILTER, API_PATH_ID} from "./consts";
-import {GameSortByTagParams, GameSortParams, GameType, GameTypeById} from "./types/gameType";
+import { API_PATH, API_PATH_FILTER, API_PATH_ID } from "./consts";
+import { GameSortByTagParams, GameSortParams, GameType, GameTypeById } from "./types/gameType";
 
 function api<T>(url: string, headers?: HeadersInit): Promise<T> {
     return fetch(

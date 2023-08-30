@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import { useEffect, useState } from "react";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 type OptionsType = {
     title: string,

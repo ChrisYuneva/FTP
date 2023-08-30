@@ -1,5 +1,5 @@
-import {render} from "@testing-library/react";
-import {GameDescription} from './index';
+import { render } from "@testing-library/react";
+import { GameDescription } from './index';
 import '@testing-library/jest-dom';
 
 const title = "Title";

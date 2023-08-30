@@ -1,21 +1,21 @@
-import {useAppDispatch, useAppSelector} from "../../utils/hooks/hooks";
-import {ChangeEvent, useEffect, useState} from "react";
-import {getGames, getGamesByTag} from "../../api/getData";
-import {gamesSlice} from "../../store/games/gamesSlice";
-import {Alert, Grid, TextField, Typography} from "@mui/material";
-import {GameCard} from "../../components/gameCard";
-import {ButtonArrow} from "../../components/buttonArrow";
-import {formatDate} from "../../utils/formatDate";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
+import { ChangeEvent, useEffect, useState } from "react";
+import { getGames, getGamesByTag } from "../../api/getData";
+import { gamesSlice} from "../../store/games/gamesSlice";
+import { Alert, Grid, TextField, Typography } from "@mui/material";
+import { GameCard} from "../../components/gameCard";
+import { ButtonArrow} from "../../components/buttonArrow";
+import { formatDate} from "../../utils/formatDate";
 import CustomFilter from "../../components/customFilter";
-import {Loading} from "../../components/loading";
-import {GameSortByTagParams, GameSortParams} from "../../api/types/gameType";
-import {categories, platforms} from "./consts";
+import { Loading} from "../../components/loading";
+import { GameSortByTagParams, GameSortParams } from "../../api/types/gameType";
+import { categories, platforms } from "./consts";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import AbcIcon from '@mui/icons-material/Abc';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import {ChipMultiSelect} from "../../components/chipMultiSelect";
-import {ButtonCustom} from "../../components/buttonCustom";
+import AbcIcon from "@mui/icons-material/Abc";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { ChipMultiSelect } from "../../components/chipMultiSelect";
+import { ButtonCustom } from "../../components/buttonCustom";
 
 export function MainPage() {
     const dispatch = useAppDispatch();
@@ -82,7 +82,7 @@ export function MainPage() {
     return (
         <Grid container flexDirection="column" gap="16px" sx={{maxWidth: "80%"}}>
             {isLoading
-                ? <Loading isLoading={isLoading}/>
+                ? <Loading isLoading={ isLoading }/>
                 : !errorMessage && <>
                 <>
                     <Typography
@@ -161,7 +161,7 @@ export function MainPage() {
                             onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                 setSearch(event.target.value);
                             }}
-                            sx={{ marginTop: "16px"}}
+                            sx={{marginTop: "16px"}}
                             fullWidth={true}
                         />
                     </Grid>
@@ -175,7 +175,7 @@ export function MainPage() {
                     {
                         games.length
                             ? games.map((el) => {
-                                if(el.title.toLowerCase().includes(search.toLowerCase())) {
+                                if (el.title.toLowerCase().includes(search.toLowerCase())) {
                                     return <GameCard
                                         key={el.id}
                                         id={el.id}
@@ -203,7 +203,7 @@ export function MainPage() {
             </>
             }
             {
-                errorMessage && <Alert severity="error">{errorMessage}</Alert>
+                errorMessage && <Alert severity="error">{ errorMessage }</Alert>
             }
         </Grid>
     )

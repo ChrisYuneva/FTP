@@ -1,7 +1,7 @@
-import { Card, CardContent, CardMedia, Grid, Typography} from "@mui/material";
-import ExtensionIcon from '@mui/icons-material/Extension';
+import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import ExtensionIcon from "@mui/icons-material/Extension";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ApartmentIcon from '@mui/icons-material/Apartment';
+import ApartmentIcon from "@mui/icons-material/Apartment";
 import { useNavigate } from "react-router-dom";
 
 type GameCardProps = {

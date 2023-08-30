@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
-import {render} from "@testing-library/react";
-import {GameMinRequirements} from "./index";
+import { render } from "@testing-library/react";
+import { GameMinRequirements } from "./index";
 
 describe('GameMinRequirements', () => {
     it('should render the minimum system requirements with correct data', () => {

@@ -1,4 +1,4 @@
-import {createTheme} from "@mui/material";
+import { createTheme } from "@mui/material";
 
 const mainColor = '#8DFD1B';
 
@@ -61,6 +61,25 @@ export const THEME = createTheme({
                 root: {
                     ":hover": {
                         backgroundColor: "#3d3d3d"
+                    }
+                }
+            }
+        },
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    "&::-webkit-scrollbar-track": {
+                        "-webkit-box-shadow": "inset 0 0 6px #787878",
+                        borderRadius: "10px"
+                    },
+                    "&::-webkit-scrollbar": {
+                        width: "12px",
+                        height: "12px",
+                        backgroundColor: "#1A1A1A"
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "#8DFD1B",
+                        borderRadius: "10px"
                     }
                 }
             }

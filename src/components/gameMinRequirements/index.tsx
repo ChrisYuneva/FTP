@@ -12,19 +12,19 @@ export function GameMinRequirements({ minRequirements }: GameMinRequirementsProp
             Minimum system requirements:
             <ul style={{color: "white"}}>
                 <li>
-                    {minRequirements.os}
+                    OS: {minRequirements.os}
                 </li>
                 <li>
-                    {minRequirements.memory}
+                    Memory: {minRequirements.memory}
                 </li>
                 <li>
                     {minRequirements.graphics}
                 </li>
                 <li>
-                    {minRequirements.processor}
+                    Processor: {minRequirements.processor}
                 </li>
                 <li>
-                    {minRequirements.storage}
+                    Storage: {minRequirements.storage}
                 </li>
             </ul>
         </Typography>

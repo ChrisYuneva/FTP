@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {InitialTypeGameById} from "../types/types";
-import {GameTypeById} from "../../api/types/gameType";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { InitialTypeGameById } from "../types/types";
+import { GameTypeById } from "../../api/types/gameType";
 
 const initialState: InitialTypeGameById = {
     gameById: [],
@@ -20,9 +20,6 @@ export const gameByIdSlice = createSlice({
                 state.gameById = [...state.gameById, action.payload];
             }
             state.isLoading = false;
-        },
-        purge(state) {
-            state.gameById = []
         },
         error(state, action: PayloadAction<string>) {
             state.errorMessage = action.payload;

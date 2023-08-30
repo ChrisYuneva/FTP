@@ -1,5 +1,5 @@
 import { Button, styled } from "@mui/material";
-import StraightIcon from '@mui/icons-material/Straight';
+import StraightIcon from "@mui/icons-material/Straight";
 
 const ButtonArrowStyle = styled(Button)(() => ({
     color: '#8DFD1B',

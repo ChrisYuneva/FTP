@@ -1,5 +1,5 @@
-import {ButtonCustom} from "../../components/buttonCustom";
-import {useNavigate} from "react-router-dom";
+import { ButtonCustom } from "../../components/buttonCustom";
+import { useNavigate } from "react-router-dom";
 
 import "./index.css";
 

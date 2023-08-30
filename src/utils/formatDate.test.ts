@@ -1,4 +1,4 @@
-import {formatDate} from "./formatDate";
+import { formatDate } from "./formatDate";
 
 describe('formatDate', () => {
     it('should return a formatted date string for a valid input date string', () => {

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
-import {fireEvent, render} from "@testing-library/react";
-import {CarouselImages} from "./index";
+import { fireEvent, render } from "@testing-library/react";
+import { CarouselImages } from "./index";
 
 describe('CarouselImages', () => {
     it('should render correctly with images', () => {

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
-import {fireEvent, render} from "@testing-library/react";
-import {ButtonCustom} from './index';
+import { fireEvent, render } from "@testing-library/react";
+import { ButtonCustom } from './index';
 
 describe('ButtonCustom', () => {
     it('should render button with text and arrow icon', () => {

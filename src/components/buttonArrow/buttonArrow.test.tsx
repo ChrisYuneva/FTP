@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
-import {render} from "@testing-library/react";
-import {ButtonArrow} from "./index";
+import { render } from "@testing-library/react";
+import { ButtonArrow } from "./index";
 
 describe('ButtonArrow', () => {
     it('should render Button component', () => {

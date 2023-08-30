@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import {gamesSlice} from "./games/gamesSlice";
+import { gamesSlice } from "./games/gamesSlice";
 
 import { persistStore,
     persistReducer,

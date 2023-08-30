@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import {Alert, Card, CardMedia, Grid, List, Typography} from "@mui/material";
+import { Alert, Card, CardMedia, Grid, List, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
 import { gameByIdSlice } from "../../store/gameById/gameByIdSlice";
@@ -8,26 +8,24 @@ import { getGameByID } from "../../api/getData";
 import { Loading } from "../../components/loading";
 import { ButtonCustom } from "../../components/buttonCustom";
 import { CarouselImages } from "../../components/carouselImages";
-import {GameMinRequirements} from "../../components/gameMinRequirements";
-import {GameDescription} from "../../components/gameDescription";
+import { GameMinRequirements } from "../../components/gameMinRequirements";
+import { GameDescription } from "../../components/gameDescription";
+
+const TIME_TO_CLEAR_LS = 1000 * 60 * 5;
 
 export function GamePage() {
     const navigate = useNavigate();
     const {id} = useParams<{ id: string }>();
 
     const dispatch = useAppDispatch();
-    const {loading, getGameById, purge, error} = gameByIdSlice.actions;
-    const {isLoading, gameById, errorMessage} = useAppSelector(state => state.gamesById);
+    const { loading, getGameById, error } = gameByIdSlice.actions;
+    const { isLoading, gameById, errorMessage } = useAppSelector(state => state.gamesById);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const timer = setInterval(async () => {
+        setTimeout(async () => {
             localStorage.removeItem('persist:root');
-        }, 1000 * 60 * 5);
-
-        return () => {
-            clearInterval(timer);
-        }
+        }, TIME_TO_CLEAR_LS);
     }, []);
 
     useEffect(() => {
@@ -43,7 +41,7 @@ export function GamePage() {
         <Grid container sx={{maxWidth: "80%"}}>
             {
                 isLoading
-                    ? <Loading isLoading={isLoading}/>
+                    ? <Loading isLoading={ isLoading }/>
                     : !errorMessage &&
                     <Grid item width="100%">
                         <ButtonCustom
@@ -67,7 +65,7 @@ export function GamePage() {
                                     {
                                         gameById.map(el => {
                                                 if (el.id === Number(id)) {
-                                                    return <>
+                                                    return <div key={el.id}>
                                                         <Typography
                                                             variant="h4"
                                                             textAlign="center"
@@ -80,28 +78,34 @@ export function GamePage() {
                                                             image={el.thumbnail}
                                                             title={el.title}
                                                         />
-                                                        {
-                                                            formatDate(el.release_date) !== "Invalid Date" &&
                                                             <Grid container marginTop="16px">
                                                                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                                                     <List sx={{color: "white"}}>
-                                                                        <GameDescription title="Release date: " value={el.release_date} isDate={true}/>
-                                                                        <GameDescription title="Genre: " value={el.genre} />
-                                                                        <GameDescription title="Publisher: " value={el.publisher} />
-                                                                        <GameDescription title="Developer: " value={el.developer} />
+                                                                        {
+                                                                            formatDate(el.release_date) !== "Invalid Date" &&
+                                                                            <>
+                                                                                <GameDescription title="Release date: "
+                                                                                                 value={el.release_date} isDate={true}/>
+                                                                            </>
+                                                                        }
+                                                                        <GameDescription title="Genre: " value={el.genre}/>
+                                                                        <GameDescription title="Publisher: "
+                                                                                         value={el.publisher}/>
+                                                                        <GameDescription title="Developer: "
+                                                                                         value={el.developer}/>
                                                                     </List>
                                                                 </Grid>
                                                                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                                                     {
                                                                         el.minimum_system_requirements && el.minimum_system_requirements.os &&
 
-                                                                        <GameMinRequirements minRequirements={el.minimum_system_requirements} />
+                                                                        <GameMinRequirements
+                                                                            minRequirements={el.minimum_system_requirements}/>
                                                                     }
                                                                 </Grid>
                                                             </Grid>
-                                                        }
                                                         <CarouselImages img={el.screenshots}/>
-                                                    </>
+                                                    </div>
                                                 }
                                             }
                                         )
@@ -110,14 +114,12 @@ export function GamePage() {
                                 : <Typography color="white">Sorry, game not found =(</Typography>
                         }
                     </Grid>
-
             }
             {
                 errorMessage &&
                 <Grid item xs={12}>
-                    <Alert severity="error">{errorMessage}</Alert>
+                    <Alert severity="error">{ errorMessage }</Alert>
                 </Grid>
-
             }
         </Grid>
     )

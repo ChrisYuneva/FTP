@@ -1,4 +1,4 @@
-import { Divider, ListItem, Typography} from "@mui/material";
+import { Divider, ListItem, Typography } from "@mui/material";
 import { formatDate } from "../../utils/formatDate";
 import React from "react";
 

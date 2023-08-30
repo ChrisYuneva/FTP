@@ -1,6 +1,6 @@
-import {render} from "@testing-library/react";
-import {GameCard} from "./index";
-import {BrowserRouter} from "react-router-dom";
+import { render } from "@testing-library/react";
+import { GameCard } from "./index";
+import { BrowserRouter } from "react-router-dom";
 import '@testing-library/jest-dom';
 
 describe('GameCard', () => {

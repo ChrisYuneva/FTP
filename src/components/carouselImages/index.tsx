@@ -1,8 +1,8 @@
 import { Screenshots } from "../../api/types/gameType";
-import {Grid, ImageList, ImageListItem, Typography} from "@mui/material";
+import { Grid, ImageList, ImageListItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import './index.css';
+import "./index.css";
 
 type CarouselImagesProps = {
     img: Screenshots[]
