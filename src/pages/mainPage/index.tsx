@@ -139,10 +139,10 @@ export function MainPage() {
                                 <AbcIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
                             </ButtonCustom>
                             <ButtonCustom
-                                text="Relevance"
+                                text="Popularity"
                                 arrow={false}
-                                active={filter["sort-by"] === 'relevance'}
-                                onClick={() => changeFilter('sort-by', 'relevance')}
+                                active={filter["sort-by"] === 'popularity'}
+                                onClick={() => changeFilter('sort-by', 'popularity')}
                             >
                                 <FavoriteBorderIcon sx={{color: '#8DFD1B', marginRight: "5px"}}/>
                             </ButtonCustom>
