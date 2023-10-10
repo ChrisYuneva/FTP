@@ -23,7 +23,7 @@ import { THEME } from "./utils/muiTheme";
 
 const router = createBrowserRouter([
     {
-        path: "/FTP",
+        path: "/",
         element: <MainPage/>,
         errorElement: <NotFoundPage/>,
     },
