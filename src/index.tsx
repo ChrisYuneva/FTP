@@ -43,7 +43,7 @@ root.render(
                 <PersistGate loading={null} persistor={persistor}>
                     <App>
                         <CssBaseline/>
-                        <RouterProvider router={router}/>
+                        <RouterProvider router={router} />
                     </App>
                 </PersistGate>
             </Provider>
