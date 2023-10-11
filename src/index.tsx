@@ -31,7 +31,10 @@ const router = createBrowserRouter([
         path: "/game/:id",
         element: <GamePage/>,
     },
-]);
+],
+    {
+        basename: '/FTP'
+    });
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
