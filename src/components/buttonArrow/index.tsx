@@ -20,7 +20,10 @@ const ButtonArrowStyle = styled(Button)(() => ({
 export function ButtonArrow() {
     return (
         <ButtonArrowStyle
-            onClick={() => window.scrollTo(0, 0)}
+            onClick={() => window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })}
         >
             <StraightIcon/>
         </ButtonArrowStyle>

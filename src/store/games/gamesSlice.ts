@@ -5,7 +5,8 @@ import { GameType } from "../../api/types/gameType";
 const initialState: InitialTypeGame = {
     games: [],
     isLoading: false,
-    errorMessage: ''
+    errorMessage: '',
+    currentPage: 1,
 }
 
 export const gamesSlice = createSlice({
@@ -22,6 +23,9 @@ export const gamesSlice = createSlice({
         error(state, action: PayloadAction<string>) {
             state.errorMessage = action.payload;
             state.isLoading = false;
+        },
+        setCurrentPage(state, action: PayloadAction<number>) {
+            state.currentPage = action.payload;
         }
     }
 })

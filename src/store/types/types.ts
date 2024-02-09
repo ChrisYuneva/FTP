@@ -3,7 +3,8 @@ import {GameType, GameTypeById} from "../../api/types/gameType";
 export type InitialTypeGame = {
     games: GameType[],
     isLoading: boolean,
-    errorMessage: string
+    errorMessage: string,
+    currentPage: number
 }
 
 export type InitialTypeGameById = {

@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks/hooks";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getGames, getGamesByTag } from "../../api/getData";
 import { gamesSlice} from "../../store/games/gamesSlice";
-import { Alert, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Grid, Pagination, TextField, Typography } from "@mui/material";
 import { GameCard} from "../../components/gameCard";
 import { ButtonArrow} from "../../components/buttonArrow";
 import { formatDate} from "../../utils/formatDate";
@@ -19,8 +19,12 @@ import { ButtonCustom } from "../../components/buttonCustom";
 
 export function MainPage() {
     const dispatch = useAppDispatch();
-    const {loading, get, error} = gamesSlice.actions;
-    const {isLoading, games, errorMessage} = useAppSelector(state => state.games)
+    const {loading, get, error, setCurrentPage} = gamesSlice.actions;
+    const {isLoading, games, errorMessage, currentPage} = useAppSelector(state => state.games);
+    const [renderGames, setRenderGames] = useState(games);
+    const elementCount = 20;
+    const [start, setStart] = useState((currentPage-1)*elementCount);
+    const [end, setEnd] = useState(elementCount*currentPage);
 
     const [filter, setFilter] = useState<GameSortParams>({
         platform: "",
@@ -70,6 +74,10 @@ export function MainPage() {
     }, []);
 
     useEffect(() => {
+        setRenderGames(() => games.slice(start, elementCount));
+    }, [games])
+
+    useEffect(() => {
         if (filter.platform !== '' || filter.category !== '' || filter["sort-by"] !== '') {
             if (filter.category?.includes('.')) {
                 getGamesListByFilter(filter);
@@ -78,6 +86,16 @@ export function MainPage() {
             }
         }
     }, [filter]);
+
+    function paginationChange(event: React.ChangeEvent<unknown>, value: number) {
+        dispatch(setCurrentPage(value));
+        setStart((value-1) * elementCount);
+        setEnd(value*elementCount);
+    }
+
+    useEffect(() => {
+        setRenderGames(games.slice(start, end));
+    }, [currentPage]);
 
     return (
         <Grid container flexDirection="column" gap="16px" sx={{maxWidth: "80%"}}>
@@ -164,6 +182,7 @@ export function MainPage() {
                             sx={{marginTop: "16px"}}
                             fullWidth={true}
                         />
+                        
                     </Grid>
                 </>
                 <Grid
@@ -174,7 +193,7 @@ export function MainPage() {
                 >
                     {
                         games.length
-                            ? games.map((el) => {
+                            ? renderGames.map((el) => {
                                 if (el.title.toLowerCase().includes(search.toLowerCase())) {
                                     return <GameCard
                                         key={el.id}
@@ -198,6 +217,7 @@ export function MainPage() {
                                 Sorry, nothing was found for these filters =(
                             </Typography>
                     }
+                    
                 </Grid>
                 <ButtonArrow/>
             </>
@@ -205,6 +225,15 @@ export function MainPage() {
             {
                 errorMessage && <Alert severity="error">{ errorMessage }</Alert>
             }
+            <Pagination 
+                count={Math.round(games.length/elementCount)} 
+                color="primary" 
+                variant="outlined" 
+                page={currentPage} 
+                onChange={paginationChange} 
+                sx={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: '16px'}}
+                size="large"
+                />
         </Grid>
     )
 }

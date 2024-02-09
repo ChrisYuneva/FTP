@@ -1,22 +1,27 @@
 import { API_PATH, API_PATH_FILTER, API_PATH_ID } from "./consts";
 import { GameSortByTagParams, GameSortParams, GameType, GameTypeById } from "./types/gameType";
 
-function api<T>(url: string, headers?: HeadersInit): Promise<T> {
-    return fetch(
-        url,
-        {
-            headers: {
-                ...headers,
-                'X-RapidAPI-Key': '1391600961mshb1f7c75708dec13p101a01jsna697a9c057e2',
-                'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
+async function api<T>(url: string, headers?: HeadersInit, abort?: AbortSignal) {
+    try {
+        const response = await fetch(
+            url,
+            {
+                headers: {
+                    ...headers,
+                    'X-RapidAPI-Key': '1391600961mshb1f7c75708dec13p101a01jsna697a9c057e2',
+                    'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
+                },
+                signal: abort
             }
-        }
-    ).then(response => {
-        if (!response.ok) {
+        );
+        if(!response.ok){
             throw new Error('Failed to fetch =( Please retry later.').message;
         }
-        return response.json() as Promise<T>;
-    })
+        return response.json();
+    }
+    catch(err) {
+        console.log(err);
+    }
 }
 
 async function retry<T>(fn: () => Promise<T> | T, retries: number): Promise<T> {
@@ -50,11 +55,12 @@ export function getGames(params?: GameSortParams) {
     );
 }
 
-export function getGameByID(id: string) {
+export function getGameByID(id: string, abort?: AbortSignal) {
     return retry(
         () => api<GameTypeById>(
             `${API_PATH_ID}${id}`,
             {method: 'GET'},
+            abort
         ), 3
     );
 }

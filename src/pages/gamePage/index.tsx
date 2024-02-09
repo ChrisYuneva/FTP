@@ -29,27 +29,38 @@ export function GamePage() {
     }, []);
 
     useEffect(() => {
+        const controller = new AbortController();
+        let signal = controller.signal;
+
         if (gameById.filter(el => el.id === Number(id)).length === 0) {
             dispatch(loading());
-            getGameByID(id ?? '')
+            getGameByID(id ?? '', signal)
                 .then(response => dispatch(getGameById(response)))
                 .catch(err => dispatch(error(err)));
         }
+
+        return () => {
+            controller.abort();
+        }
     }, [id]);
+
+    function returnToHome() {
+        navigate(-1);
+    }
 
     return (
         <Grid container sx={{maxWidth: "80%"}}>
+                  <ButtonCustom
+                            text={"Return to list"}
+                            arrow={true}
+                            active={false}
+                            onClick={returnToHome}
+                        />
             {
                 isLoading
                     ? <Loading isLoading={ isLoading }/>
                     : !errorMessage &&
                     <Grid item width="100%">
-                        <ButtonCustom
-                            text={"Return to list"}
-                            arrow={true}
-                            active={false}
-                            onClick={() => navigate(-1)}
-                        />
                         {
                             gameById.find(el => el.id === Number(id))
                                 ? <Card
@@ -124,7 +135,7 @@ export function GamePage() {
                                 : <Typography color="white">Sorry, game not found =(</Typography>
                         }
                     </Grid>
-            }
+            } 
             {
                 errorMessage &&
                 <Grid item xs={12}>

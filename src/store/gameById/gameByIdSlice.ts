@@ -15,9 +15,11 @@ export const gameByIdSlice = createSlice({
         loading(state) {
             state.isLoading = true;
         },
-        getGameById(state, action: PayloadAction<GameTypeById>) {
-            if (state.gameById.filter(el => el.id === action.payload.id).length === 0) {
-                state.gameById = [...state.gameById, action.payload];
+        getGameById(state, action?: PayloadAction<GameTypeById>) {
+            if (action?.payload) {
+                if (state.gameById.filter(el => el.id === action.payload.id).length === 0) {
+                    state.gameById = [...state.gameById, action.payload];
+                }
             }
             state.isLoading = false;
         },

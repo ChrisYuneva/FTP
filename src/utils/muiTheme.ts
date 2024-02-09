@@ -83,6 +83,13 @@ export const THEME = createTheme({
                     }
                 }
             }
+        },
+        MuiPaginationItem: {
+            styleOverrides: {
+                root: {
+                    color: '#fff',
+                }
+            }
         }
     }
 })
